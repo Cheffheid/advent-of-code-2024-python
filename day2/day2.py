@@ -3,9 +3,10 @@ def main() :
     input = open('input.txt', 'r')
 
     reports = get_reports(input)
-    safe_reports = get_safe_reports(reports)
+    dampener = True # To get the answer for part 1, set to False
+    safe_reports = get_safe_reports(reports, dampener)
 
-    print(f"safe reports: {len(safe_reports)}")
+    print(f"safe reports: {len(safe_reports)}, used dampener: {dampener}")
 
 # Formats each report from the input file to ensure all the reported levels are integers.
 def get_reports(input) :
@@ -23,16 +24,24 @@ def debug_reports():
 
     return get_safe_reports(test_report)
 
-# Solution for part 1 starts here.
-def get_safe_reports(reports) :
+# Solution for both parts starts here.
+# Part 1 can be run as-is, ie. get_safe_reports(reports)
+# Part 2 introduces a dampener to mark additional reports as safe if levels are removed to make it so.
+def get_safe_reports(reports, dampener=False) :
     safe_reports = []
 
     for report in reports:
-        if (report_is_safe(report)) :
+        safe_report = report_is_safe(report)
+
+        if (not safe_report and dampener) :
+            safe_report = can_report_be_made_safe(report)
+
+        if safe_report:
             safe_reports.append(report)
 
     return safe_reports
 
+# Part 1 - Test the report, given the requirements.
 def report_is_safe(report) :
     if (not difference_is_safe(report[0], report[1])) :
         return False
@@ -57,6 +66,19 @@ def report_is_safe(report) :
 
     return True
 
+# Part 2 - Re-try the report as many times as it takes to get a safe report when one value is removed from it.
+def can_report_be_made_safe(report) :
+    for index, level in enumerate(report):
+        dampened_report = report.copy()
+        dampened_report.pop(index)
+        dampened_report_is_safe = report_is_safe(dampened_report)
+
+        if dampened_report_is_safe :
+            return True
+
+    return False
+
+# Helper functions
 def difference_is_safe(level1, level2) :
     difference = level1 - level2
 
