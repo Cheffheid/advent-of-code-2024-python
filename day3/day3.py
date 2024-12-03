@@ -14,7 +14,7 @@ def main() :
     multiplications_part_one = get_multiplications(memory_string, "mul\((\d+,\d+)\)")
 
     # This regex is similar, except it also captures dos and donts as markers for which multiplications should be run.
-    multiplications_part_two = get_valid_part_two_multiplications(get_multiplications(memory_string, "mul\((\d+,\d+)\)|(don't)\(\)|(do\(\))"))
+    multiplications_part_two = get_valid_part_two_multiplications(get_multiplications(memory_string, "mul\((\d+,\d+)\)|(don't\(\))|(do\(\))"))
 
     multiplication_sum_part_one = run_multiplications(multiplications_part_one)
     multiplication_sum_part_two = run_multiplications(multiplications_part_two)
@@ -30,7 +30,8 @@ def get_valid_part_two_multiplications(multiplications_list) :
     valid_list = []
 
     for hits in multiplications_list:
-        if "don't" in hits:
+        print(hits)
+        if "don't()" in hits:
             valid = False
             continue
 
