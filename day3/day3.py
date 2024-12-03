@@ -30,7 +30,6 @@ def get_valid_part_two_multiplications(multiplications_list) :
     valid_list = []
 
     for hits in multiplications_list:
-        print(hits)
         if "don't()" in hits:
             valid = False
             continue
