@@ -2,23 +2,46 @@ import re
 
 def main() :
     input = open('input.txt', 'r')
-
-    multiplications_in_memory = get_multiplications(input.read())
-
+    memory_string = input.read()
     input.close()
 
-    multiplication_sum = run_multiplications(multiplications_in_memory)
+    # Use a regex to find any instance of mul(digits,digits) in the memory string:
+    # mul\( matches "mul("
+    # ( starts a capture group
+    # \d+,\d+ matches any comma separated pair of one or more digits
+    # ) closes the capture group
+    # \) matches ")" to capture the end of a mul() statement
+    multiplications_part_one = get_multiplications(memory_string, "mul\((\d+,\d+)\)")
 
-    print(f"answer for part 1: {multiplication_sum}")
+    # This regex is similar, except it also captures dos and donts as markers for which multiplications should be run.
+    multiplications_part_two = get_valid_part_two_multiplications(get_multiplications(memory_string, "mul\((\d+,\d+)\)|(don't)\(\)|(do\(\))"))
 
-# Use a regex to find any instance of mul(digits,digits) in memory:
-# mul\( matches "mul("
-# ( starts a capture group
-# \d+,\d+ matches any comma separated pair of one or more digits
-# ) closes the capture group
-# \) matches ")" to capture the end of a mul() statement
-def get_multiplications(memory) :
-    return re.findall("mul\((\d+,\d+)\)", memory)
+    multiplication_sum_part_one = run_multiplications(multiplications_part_one)
+    multiplication_sum_part_two = run_multiplications(multiplications_part_two)
+
+    print(f"answer for part 1: {multiplication_sum_part_one}")
+    print(f"answer for part 2: {multiplication_sum_part_two}")
+
+def get_multiplications(memory, regex) :
+    return re.findall(regex, memory)
+
+def get_valid_part_two_multiplications(multiplications_list) :
+    valid = True
+    valid_list = []
+
+    for hits in multiplications_list:
+        if "don't" in hits:
+            valid = False
+            continue
+
+        if "do()" in hits:
+            valid = True
+            continue
+
+        if valid:
+            valid_list.append(hits[0])
+
+    return valid_list
 
 # Get answer for part 1
 def run_multiplications(multiplications) :
