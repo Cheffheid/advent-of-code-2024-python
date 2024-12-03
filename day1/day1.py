@@ -5,6 +5,8 @@ def main() :
 
     left_pairs, right_pairs = get_pairs_from_input(input)
 
+    input.close()
+
     distance = get_distance_from_pairs(left_pairs, right_pairs)
     similarity = get_similarity_score(left_pairs, right_pairs)
 

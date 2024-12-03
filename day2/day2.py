@@ -3,6 +3,9 @@ def main() :
     input = open('input.txt', 'r')
 
     reports = get_reports(input)
+
+    input.close()
+
     dampener = True # To get the answer for part 1, set to False
     safe_reports = get_safe_reports(reports, dampener)
 
