@@ -1,9 +1,7 @@
 import re
 
 def main() :
-    input = open('input.txt', 'r')
-    memory_string = input.read()
-    input.close()
+    memory_string = get_memory_string()
 
     # Use a regex to find any instance of mul(digits,digits) in the memory string:
     # mul\( matches "mul("
@@ -21,6 +19,13 @@ def main() :
 
     print(f"answer for part 1: {multiplication_sum_part_one}")
     print(f"answer for part 2: {multiplication_sum_part_two}")
+
+def get_memory_string() :
+    input = open('input.txt', 'r')
+    memory_string = input.read()
+    input.close()
+
+    return memory_string
 
 def get_multiplications(memory, regex) :
     return re.findall(regex, memory)

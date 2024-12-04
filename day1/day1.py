@@ -1,11 +1,7 @@
 from collections import Counter
 
 def main() :
-    input = open('input.txt', 'r')
-
-    left_pairs, right_pairs = get_pairs_from_input(input)
-
-    input.close()
+    left_pairs, right_pairs = get_pairs_from_input()
 
     distance = get_distance_from_pairs(left_pairs, right_pairs)
     similarity = get_similarity_score(left_pairs, right_pairs)
@@ -13,7 +9,9 @@ def main() :
     print(f"answer for part 1: {distance}")
     print(f"answer for part 2: {similarity}")
 
-def get_pairs_from_input(input):
+def get_pairs_from_input():
+    input = open('input.txt', 'r')
+
     left_side = []
     right_side = []
 
@@ -24,6 +22,8 @@ def get_pairs_from_input(input):
 
     left_side.sort()
     right_side.sort()
+
+    input.close()
 
     return left_side, right_side
 

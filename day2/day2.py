@@ -1,23 +1,23 @@
-
 def main() :
-    input = open('input.txt', 'r')
+    reports = get_reports()
 
-    reports = get_reports(input)
+    part_one_safe_reports = get_safe_reports(reports)
+    part_two_safe_reports = get_safe_reports(reports, True)
 
-    input.close()
-
-    dampener = True # To get the answer for part 1, set to False
-    safe_reports = get_safe_reports(reports, dampener)
-
-    print(f"safe reports: {len(safe_reports)}, used dampener: {dampener}")
+    print(f"part 1 safe reports: {len(part_one_safe_reports)}")
+    print(f"part 2 safe reports: {len(part_two_safe_reports)}")
 
 # Formats each report from the input file to ensure all the reported levels are integers.
-def get_reports(input) :
+def get_reports() :
+    input = open('input.txt', 'r')
+
     reports = []
 
     for line in input:
         levels = [ int(x) for x in line.split() ]
         reports.append(levels)
+
+    input.close()
 
     return reports
 
