@@ -4,6 +4,12 @@ This is the code that I've used to find the solutions for this year's Advent of 
 
 My main goal is to show what I did to get a solution to the problem, while keeping the code easy to follow.
 
+## A note on puzzle inputs
+
+It has come to my attention that I shouldn't be including the puzzle inputs. I've since used git-filter-repo to scrub the input.txt files from the repository.
+
+So you will need to provide your own :).
+
 ## Running this code and other notes
 
 Since I'm using f-strings (ie. `f"{}"`), these scripts will need to be run in a Python 3 environment. No external libraries should need to be installed, and the only important thing is that the scripts are run from the directory they are in. ie. `python3 day1.py` should be run from the day1 folder.
